@@ -242,7 +242,7 @@ function BarChart({ text, handleItemClick, deficitLabel, selectedItem, data, lef
                 ctx.font = 'bold 12px Noto Sans'
                 ctx.textAlign = 'center'
                 ctx.textBaseline = 'middle'
-                ctx.fillText(Math.abs(deficitLabel), rectX + labelWidth / 2 - 7, rectY + maxHeight / 2 + 2)
+                ctx.fillText(Math.round(deficitLabel), rectX + labelWidth / 2 - 7, rectY + maxHeight / 2 + 2)
               }
             })
           })
@@ -260,7 +260,7 @@ function BarChart({ text, handleItemClick, deficitLabel, selectedItem, data, lef
           datasets: [
             {
               label: 'none',
-              data: [Math.abs(parseInt(leftData)), Math.abs(parseInt(rightData))],
+              data: [Math.round(parseInt(leftData)), Math.round(parseInt(rightData))],
               backgroundColor: [
                 parseInt(leftData) > parseInt(rightData) ? getColorByRange(type, 0) : getColorByRange(type, parseInt(deficitLabel)),
                 parseInt(rightData) > parseInt(leftData) ? getColorByRange(type, 0) : getColorByRange(type, parseInt(deficitLabel)),

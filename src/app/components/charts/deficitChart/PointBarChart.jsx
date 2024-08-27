@@ -130,7 +130,7 @@ function PointBarChart({ type, data }) {
                 if (typeof value === 'undefined') {
                   return
                 }
-                return Math.abs(Math.abs(value).toString())
+                return Math.round(Math.abs(value).toString())
               }, // Display the data value as the label
               offset: 10,
               padding: context => {
