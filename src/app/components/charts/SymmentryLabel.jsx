@@ -10,9 +10,9 @@ function SymmentryLabel({ text1, color1, text2, color2 }) {
           <Box bg={color1} borderRadius="2px" h="10px" w="10px"></Box>
           <Text
             lineHeight={"16px"}
-            paddingTop={"2px"}
             textAlign={"center"}
             fontSize="11px"
+            fontFamily={"Noto Sans"}
             color={colors.faintblack}
           >
             {text1}
@@ -23,7 +23,7 @@ function SymmentryLabel({ text1, color1, text2, color2 }) {
             <Box bg={color2} borderRadius="2px" h="10px" w="10px"></Box>
             <Text
               lineHeight={"16px"}
-              paddingTop={"2px"}
+              fontFamily={"Noto Sans"}
               fontSize="11px"
               color={colors.faintblack}
             >

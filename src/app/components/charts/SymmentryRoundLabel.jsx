@@ -9,8 +9,8 @@ function SymmentryRoundLabel({ text, color }) {
         <Box display="flex" gap="4px" alignItems="center">
           <Box bg={color} borderRadius="full" h="10px" w="10px"></Box>
           <Text
+            fontFamily={"Noto Sans"}
             lineHeight={"16px"}
-            paddingTop={"2px"}
             textAlign={"center"}
             fontSize="11px"
             color={colors.faintblack}

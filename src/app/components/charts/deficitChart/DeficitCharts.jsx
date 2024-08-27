@@ -1,120 +1,110 @@
-import { Box, Divider, Text } from "@chakra-ui/layout";
-import React from "react";
-import Icon from "../../form/Icon";
+import { Box, Divider, Text } from '@chakra-ui/layout'
+import React from 'react'
+import Icon from '../../form/Icon'
+// import chartData from '../chartData'
 
-import DeficitGraph from "./DeficitGraph";
+import DeficitGraph from './DeficitGraph'
 
-import colors from "../../../config/colors";
-import SymmentryRoundLabel from "../SymmentryRoundLabel";
-import assets from "../../../assets/assests";
-import SymmentryLabel from "../SymmentryLabel";
+import colors from '../../../config/colors'
+import SymmentryRoundLabel from '../SymmentryRoundLabel'
+import assets from '../../../assets/assests'
+import SymmentryLabel from '../SymmentryLabel'
+import { getLabelByRange, getLabelByRangeHind } from '../../../utils/helperFunc'
 
-function DeficitCharts() {
+const badgeValue = {
+  left: 'Left circle',
+  right: 'Right circle',
+  straight: 'Straight line',
+}
+const badgeColor = {
+  left: colors.faintblue,
+  right: colors.darkpurple,
+  straight: colors.mustard,
+}
+
+function DeficitCharts({ chartData, handleItemClick }) {
+  const FrontLabels = [
+    getLabelByRange(Math.abs(chartData?.deficit?.foreImpact?.straight)),
+    getLabelByRange(Math.abs(chartData?.deficit?.foreImpact?.right)),
+    getLabelByRange(Math.abs(chartData?.deficit?.foreImpact?.left)),
+    getLabelByRange(Math.abs(chartData?.deficit?.forePushoff?.straight)),
+    getLabelByRange(Math.abs(chartData?.deficit?.forePushoff?.right)),
+    getLabelByRange(Math.abs(chartData?.deficit?.forePushoff?.left)),
+  ]
+  const HindLabels = [
+    getLabelByRangeHind(Math.abs(chartData?.deficit?.hindImpact?.straight)),
+    getLabelByRangeHind(Math.abs(chartData?.deficit?.hindImpact?.right)),
+    getLabelByRangeHind(Math.abs(chartData?.deficit?.hindImpact?.left)),
+    getLabelByRangeHind(Math.abs(chartData?.deficit?.hindPushoff?.straight)),
+    getLabelByRangeHind(Math.abs(chartData?.deficit?.hindPushoff?.right)),
+    getLabelByRangeHind(Math.abs(chartData?.deficit?.hindPushoff?.left)),
+  ]
+  const uniqueFrontArray = FrontLabels.filter((obj, index, self) => obj.name && index === self.findIndex(o => o.name === obj.name))
+  const uniqueHindArray = HindLabels.filter((obj, index, self) => obj.name && index === self.findIndex(o => o.name === obj.name))
+
+  console.log('123123123123132', getLabelByRange())
   return (
-    <Box paddingX={"16px"} paddingY={"32px"}>
-      <Box
-        mb="10px"
-        paddingY={"7px"}
-        alignItems={"center"}
-        display={"flex"}
-        gap={"6px"}
-      >
-        <Text
-          fontSize="16px"
-          color={colors.dullblack}
-          lineHeight={"22px"}
-          fontWeight={700}
-          fontFamily="Nunito"
-        >
+    <Box paddingX={'16px'} paddingY={'32px'}>
+      <Box mb='10px' paddingY={'7px'} alignItems={'center'} display={'flex'} gap={'6px'}>
+        <Text fontSize='16px' color={colors.dullblack} lineHeight={'22px'} fontWeight={700} fontFamily='Nunito'>
           Deficit Bar Chart
         </Text>
-        <Icon
-          imageHeight={"14px"}
-          imageWidth={"14px"}
-          image={assets.icons.darkInfo}
-        />
+        <Icon onClick={() => handleItemClick('deficit-bar-chart')} imageHeight={'20px'} imageWidth={'20px'} image={assets.icons.darkInfo} />
       </Box>
-      <Box display={"flex"} gap="6px">
+      <Box display={'flex'} gap='6px'>
         <Icon image={assets.icons.trottingHorse} />
-        <Text
-          fontFamily={"Nunito"}
-          fontWeight={700}
-          fontSize={"16px"}
-          lineHeight={"20px"}
-          color={colors.textcolor}
-        >
+        <Text fontFamily={'Nunito'} fontWeight={700} fontSize={'16px'} lineHeight={'20px'} color={colors.textcolor}>
           Front
         </Text>
       </Box>
-      <Box gap={"23px"} display="flex">
-        <DeficitGraph type="Impact" />
-        <DeficitGraph type="Push Off" />
+      <Box maxW={'100%'} gap={'23px'} display='flex'>
+        <DeficitGraph horseSide='front' data={chartData?.deficit?.foreImpact} type='Impact' />
+        <DeficitGraph horseSide='front' data={chartData?.deficit?.forePushoff} type='Push Off' />
       </Box>
-      <Box mt="12px" display={"flex"} gap={"20px"}>
-        <SymmentryRoundLabel text={"Left rein"} color={colors.faintblue} />
-        <SymmentryRoundLabel text={"Straight line"} color={colors.mustard} />
-        <SymmentryRoundLabel text={"Right rein"} color={colors.darkpurple} />
-        <Box display={"flex"} alignItems={"center"}>
-          <Icon
-            imageWidth={"14px"}
-            imageHeight={"2px"}
-            image={assets.icons.Line}
-          />
-          <Text
-            ml="2px"
-            fontSize={"11px"}
-            textAlign={"center"}
-            lineHeight={"16px"}
-            color={colors.faintblack}
-            paddingTop={"2px"}
-          >
+      <Box mt='12px' display={'flex'} gap={'20px'}>
+        {chartData?.confidence?.map((item, index) => item?.trottype !== 'allfootage' && <SymmentryRoundLabel key={index} text={badgeValue[item?.trottype]} color={badgeColor[item?.trottype]} />)}
+        <Box display={'flex'} gap={'4px'} alignItems={'center'}>
+          <Icon imageWidth={'14px'} imageHeight={'2px'} image={assets.icons.Line} />
+          <Text ml='2px' fontFamily={'Noto Sans'} fontSize={'11px'} textAlign={'center'} lineHeight={'16px'} color={colors.faintblack} paddingTop={'2px'}>
             Mean
           </Text>
         </Box>
       </Box>
-      <Divider mt="8px" />
-      <Box display={"flex"} flexDir={"column"} gap={"8px"} mt="8px">
-        <SymmentryLabel
-          text1="Normal symmetry"
-          color1={colors.mediumGreen}
-          text2={"Mild to moderate asymmetry"}
-          color2={colors.lightYellow}
-        />
-        <SymmentryLabel text1="Severe asymmetry" color1={colors.mehron} />
+      <Divider mt='8px' />
+      <Box display={'flex'} flexDir={'column'} gap={'8px'} mt='8px'>
+        {uniqueFrontArray?.map(
+          (item, index) =>
+            index % 2 === 0 && <SymmentryLabel key={index} text1={item.name} color1={item.color} text2={uniqueFrontArray[index + 1]?.name || ''} color2={uniqueFrontArray[index + 1]?.color || ''} />,
+        )}
       </Box>
-      <Box mt="40px" display={"flex"} gap="6px">
+      <Box mt='40px' display={'flex'} gap='6px'>
         <Icon image={assets.icons.trottingHorse1} />
-        <Text
-          fontFamily={"Nunito"}
-          fontWeight={700}
-          fontSize={"16px"}
-          lineHeight={"20px"}
-          color={colors.textcolor}
-        >
+        <Text fontFamily={'Nunito'} fontWeight={700} fontSize={'16px'} lineHeight={'20px'} color={colors.textcolor}>
           Hind
         </Text>
       </Box>
-      <Box gap={"23px"} display="flex">
-        <DeficitGraph type="Impact" />
-        <DeficitGraph type="Push Off" />
+      <Box maxW={'100%'} gap={'23px'} display='flex'>
+        <DeficitGraph horseSide='hind' data={chartData?.deficit?.hindImpact} type='Impact' />
+        <DeficitGraph horseSide='hind' data={chartData?.deficit?.hindPushoff} type='Push Off' />
       </Box>
-      <Box mt="12px" gap="20px" display={"flex"}>
-        <SymmentryRoundLabel text={"Left rein"} color={colors.faintblue} />
-        <SymmentryRoundLabel text={"Straight line"} color={colors.mustard} />
-        <SymmentryRoundLabel text={"Right rein"} color={colors.darkpurple} />
+      <Box mt='12px' gap='20px' display={'flex'}>
+        {chartData?.confidence?.map((item, index) => item?.trottype !== 'allfootage' && <SymmentryRoundLabel key={index} text={badgeValue[item?.trottype]} color={badgeColor[item?.trottype]} />)}
+        <Box display={'flex'} gap={'4px'} alignItems={'center'}>
+          <Icon imageWidth={'14px'} imageHeight={'2px'} image={assets.icons.Line} />
+          <Text ml='2px' fontFamily={'Noto Sans'} fontSize={'11px'} textAlign={'center'} lineHeight={'16px'} color={colors.faintblack} paddingTop={'2px'}>
+            Mean
+          </Text>
+        </Box>
       </Box>
-      <Divider mt="8px" />
-      <Box display={"flex"} flexDir={"column"} gap={"10px"} mt="8px">
-        <SymmentryLabel
-          text1="Normal symmetry"
-          color1={colors.mediumGreen}
-          text2={"Mild to moderate asymmetry"}
-          color2={colors.lightYellow}
-        />
-        <SymmentryLabel text1="Severe asymmetry" color1={colors.mehron} />
+      <Divider mt='8px' />
+      <Box display={'flex'} flexDir={'column'} gap={'10px'} mt='8px'>
+        {uniqueHindArray?.map(
+          (item, index) =>
+            index % 2 === 0 && <SymmentryLabel key={index} text1={item.name} color1={item.color} text2={uniqueHindArray[index + 1]?.name || ''} color2={uniqueHindArray[index + 1]?.color || ''} />,
+        )}
       </Box>
     </Box>
-  );
+  )
 }
 
-export default DeficitCharts;
+export default DeficitCharts

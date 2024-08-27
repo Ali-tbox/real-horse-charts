@@ -4,7 +4,7 @@ import ChartMainContainer from "./ChartMainContainer";
 
 function MainPage() {
   return (
-    <Box bg="red.400" w="100vw" h="100vh">
+    <Box w="100vw" h="100vh">
       <ChartMainContainer />
     </Box>
   );
