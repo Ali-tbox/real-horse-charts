@@ -30,7 +30,7 @@ function SineCurve({ chartData, straightData, leftData, rightData, type }) {
   const menuItems = chartData?.confidence?.map(item => badgeValue[item.trottype])
   const customSort = (a, b) => {
     // Define the desired order
-    const order = ['All data', 'Left circle', 'Right circle']
+    const order = ['All data', 'Left circle', 'Right circle','Straight line']
     // Find the indices of elements in the order array
     const indexA = order.indexOf(a)
     const indexB = order.indexOf(b)
@@ -40,7 +40,7 @@ function SineCurve({ chartData, straightData, leftData, rightData, type }) {
   const sortedMenuItems = menuItems?.sort(customSort)
   const [selectedItem, setSelectedItem] = useState(chartData?.confidence?.length <= 2 && isOnlyStraight ? 'Straight line' : menuItems?.sort(customSort)[0])
   const [selectedStrideItem, setSelectedStrideItem] = useState(strideItems[0])
-
+console.log('hel1deacsds', menuItems, chartData?.confidence?.length, isOnlyStraight,selectedItem)
   const handleClick = item => {
     setSelectedItem(item)
 
