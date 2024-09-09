@@ -8,7 +8,7 @@ function PointBarChart({ type, data }) {
   const right = data?.right || 0
   const left = data?.left || 0
   const straight = data?.straight || 0
-  const mean = Math.abs(data?.mean)
+  const mean = data?.mean
   const isLeft = data?.left !== undefined ? [data.left] : []
   const isStraight = data?.straight !== undefined ? [...isLeft, data.straight] : [...isLeft]
   const isRight = data?.right !== undefined ? [...isStraight, data.right] : [...isStraight]
