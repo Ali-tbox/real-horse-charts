@@ -311,7 +311,7 @@ function ScatterPieChart({ selectedStrideItem, selectedItem, rightData, leftData
                 backdropColor: 'white',
                 mirror: true,
                 stepSize: max === 75 ? 25 : 15,
-                font: { family: 'Noto sans', weight: 'bold' },
+                font: { family: 'Noto Sans', weight: 'bold' },
                 color: colors.dullblack,
                 callback: value => Math.abs(value), // Display absolute value for X-axis ticks
               },
@@ -345,7 +345,7 @@ function ScatterPieChart({ selectedStrideItem, selectedItem, rightData, leftData
                 showLabelBackdrop: true,
                 backdropColor: 'white',
                 mirror: true,
-                font: { family: 'Noto sans', weight: 'bold' },
+                font: { family: 'Noto Sans', weight: 'bold' },
                 color: colors.dullblack,
                 // color: (context) =>
                 //   context.tick.value === max ? "transparent" : colors.dullblack,

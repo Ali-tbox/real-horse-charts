@@ -43,10 +43,10 @@ function StrideSymmetryGraph({ checkValue, handleItemClick, deficitLabel, select
           />
         </Box>
         <Box justifyContent={'space-around'} mt='8px' pb={'3px'} display={'flex'}>
-          <Text fontFamily={'Noto sans'} fontSize={'12px'} ml='4px' lineHeight={'16px'} color={colors.faintblack}>
+          <Text fontFamily={'Noto Sans'} fontSize={'12px'} ml='4px' lineHeight={'16px'} color={colors.faintblack}>
             Left
           </Text>
-          <Text fontFamily={'Noto sans'} fontSize={'12px'} lineHeight={'16px'} color={colors.faintblack}>
+          <Text fontFamily={'Noto Sans'} fontSize={'12px'} lineHeight={'16px'} color={colors.faintblack}>
             Right
           </Text>
         </Box>

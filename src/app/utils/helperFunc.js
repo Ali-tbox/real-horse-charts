@@ -187,7 +187,7 @@ function drawLineWithCircularPoint(ctx, scales, startPoint, endPoint, color, ann
   // ctx.fillRect(labelX - labelWidth / 3.9, labelY - maxHeight / 15.8, labelWidth / 2, maxHeight / 9.5)
 
   // Draw the data label
-  ctx.font = 'bold 12px noto sans' // Adjust the font size as needed
+  ctx.font = 'bold 12px Noto Sans' // Adjust the font size as needed
   ctx.fillStyle = 'black'
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
