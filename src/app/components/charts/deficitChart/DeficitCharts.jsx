@@ -47,7 +47,7 @@ function DeficitCharts({ chartData, handleItemClick }) {
     <Box paddingX={'16px'} paddingY={'32px'}>
       <Box mb='10px' paddingY={'7px'} alignItems={'center'} display={'flex'} gap={'6px'}>
         <Text fontSize='16px' color={colors.dullblack} lineHeight={'22px'} fontWeight={700} fontFamily='Nunito'>
-          Deficit Bar Chart
+          Relative Deficit Bar Chart
         </Text>
         <Icon onClick={() => handleItemClick('deficit-bar-chart')} imageHeight={'20px'} imageWidth={'20px'} image={assets.icons.darkInfo} />
       </Box>

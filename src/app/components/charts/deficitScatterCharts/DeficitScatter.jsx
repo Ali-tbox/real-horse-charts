@@ -15,6 +15,11 @@ const badgeValue = {
   straight: 'Straight line',
   allfootage: 'All data',
 }
+const labelActualValue = {
+  'Left circle': 'left',
+  'Right circle': 'right',
+  'Straight line': 'straight',
+}
 const badgeColor = {
   left: colors.faintblue,
   right: colors.darkpurple,
@@ -34,9 +39,11 @@ function DeficitScatter({ chartData, straightData, leftData, rightData, max, min
   const sortedMenuItems = menuItems?.sort(customSort)
   const [selectedItem, setSelectedItem] = useState(chartData?.confidence?.length <= 2 && isOnlyStraight ? 'Straight line' : menuItems?.sort(customSort)[0])
   const [selectedStrideItem, setSelectedStrideItem] = useState(strideItems[0])
+  const [confidenceArray, setConfidenceArray] = useState(chartData?.confidence)
 
   const handleClick = item => {
     setSelectedItem(item)
+    setConfidenceArray(item === 'All data' ? chartData?.confidence : chartData?.confidence?.filter(c => c.trottype === labelActualValue[item]))
   }
   const handleStrideClick = item => {
     setSelectedStrideItem(item)
@@ -70,7 +77,7 @@ function DeficitScatter({ chartData, straightData, leftData, rightData, max, min
       </Box>
 
       <Box paddingX={'16px'} mt='16px' gap='20px' display={'flex'}>
-        {chartData?.confidence?.map((item, index) => item?.trottype !== 'allfootage' && <SymmentryRoundLabel key={index} text={badgeValue[item?.trottype]} color={badgeColor[item?.trottype]} />)}
+        {confidenceArray?.map((item, index) => item?.trottype !== 'allfootage' && <SymmentryRoundLabel key={index} text={badgeValue[item?.trottype]} color={badgeColor[item?.trottype]} />)}
       </Box>
       <Box w='100%' paddingX={'16px'}>
         <Divider mt='8px' />

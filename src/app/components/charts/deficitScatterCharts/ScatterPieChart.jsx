@@ -190,8 +190,8 @@ function ScatterPieChart({ selectedStrideItem, selectedItem, rightData, leftData
               data: [medianLeftObject?.points],
               animation: false,
               radius: [15],
-              borderColor: [colors.white],
-              backgroundColor: [colors.faintblue],
+              borderColor: selectedItem === 'Left circle' || selectedItem === 'All data' ? [colors.white] : 'transparent',
+              backgroundColor: selectedItem === 'Left circle' || selectedItem === 'All data' ? [colors.faintblue] : 'transparent',
               borderWidth: [2],
             },
             {
@@ -199,8 +199,8 @@ function ScatterPieChart({ selectedStrideItem, selectedItem, rightData, leftData
               animation: false,
 
               radius: [15],
-              borderColor: [colors.white],
-              backgroundColor: [colors.mustard],
+              borderColor: selectedItem === 'Straight line' || selectedItem === 'All data' ? [colors.white] : 'transparent',
+              backgroundColor: selectedItem === 'Straight line' || selectedItem === 'All data' ? [colors.mustard] : 'transparent',
 
               borderWidth: [2],
             },
@@ -209,8 +209,8 @@ function ScatterPieChart({ selectedStrideItem, selectedItem, rightData, leftData
               animation: false,
 
               radius: [15],
-              borderColor: [colors.white],
-              backgroundColor: [colors.darkpurple],
+              borderColor: selectedItem === 'Right circle' || selectedItem === 'All data' ? [colors.white] : 'transparent',
+              backgroundColor: selectedItem === 'Right circle' || selectedItem === 'All data' ? [colors.darkpurple] : 'transparent',
 
               borderWidth: [2],
             },

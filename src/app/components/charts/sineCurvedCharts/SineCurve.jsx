@@ -15,6 +15,11 @@ const badgeValue = {
   straight: 'Straight line',
   allfootage: 'All data',
 }
+const labelActualValue = {
+  'Left circle': 'left',
+  'Right circle': 'right',
+  'Straight line': 'straight',
+}
 const badgeColor = {
   left: colors.faintblue,
   right: colors.darkpurple,
@@ -40,9 +45,11 @@ function SineCurve({ chartData, straightData, leftData, rightData, type }) {
   const sortedMenuItems = menuItems?.sort(customSort)
   const [selectedItem, setSelectedItem] = useState(chartData?.confidence?.length <= 2 && isOnlyStraight ? 'Straight line' : menuItems?.sort(customSort)[0])
   const [selectedStrideItem, setSelectedStrideItem] = useState(strideItems[0])
+  const [confidenceArray, setConfidenceArray] = useState(chartData?.confidence)
   console.log('hel1deacsds', menuItems, chartData?.confidence?.length, isOnlyStraight, selectedItem)
   const handleClick = item => {
     setSelectedItem(item)
+    setConfidenceArray(item === 'All data' ? chartData?.confidence : chartData?.confidence?.filter(c => c.trottype === labelActualValue[item]))
 
     if (type === 'front') {
       if (item === 'All data') {
@@ -127,7 +134,7 @@ function SineCurve({ chartData, straightData, leftData, rightData, type }) {
         </Box>
       </Box>
       <Box mt='12px' display={'flex'} gap={'20px'}>
-        {chartData?.confidence?.map((item, index) => item?.trottype !== 'allfootage' && <SymmentryRoundLabel key={index} text={badgeValue[item?.trottype]} color={badgeColor[item?.trottype]} />)}
+        {confidenceArray?.map((item, index) => item?.trottype !== 'allfootage' && <SymmentryRoundLabel key={index} text={badgeValue[item?.trottype]} color={badgeColor[item?.trottype]} />)}
         <Box display={'flex'} gap={'4px'} alignItems={'center'}>
           <Icon imageWidth={'14px'} imageHeight={'2px'} image={assets.icons.Line} />
           <Text fontFamily={'Noto Sans'} fontSize={'11px'} textAlign={'center'} lineHeight={'16px'} color={colors.faintblack}>
