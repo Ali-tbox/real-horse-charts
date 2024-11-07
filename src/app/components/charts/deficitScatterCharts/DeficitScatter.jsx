@@ -51,6 +51,7 @@ function DeficitScatter({ chartData, straightData, leftData, rightData, max, min
   console.log('settingselectedStride', menuItems)
   useEffect(() => {
     setSelectedItem(chartData?.confidence?.length <= 2 && isOnlyStraight ? 'Straight line' : menuItems?.sort(customSort)[0])
+    setConfidenceArray(chartData?.confidence)
   }, [chartData])
   return (
     <Box w='100%' mt={type === 'front' ? '10px' : '40px'}>

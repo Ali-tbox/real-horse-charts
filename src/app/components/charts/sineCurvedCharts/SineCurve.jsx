@@ -104,6 +104,7 @@ function SineCurve({ chartData, straightData, leftData, rightData, type }) {
       setLabels([...getAnnotations(chartData?.sineCurve?.leftHind), ...getAnnotations(chartData?.sineCurve?.rightHind), ...getAnnotations(chartData?.sineCurve?.straighthind)])
     }
     setSelectedItem(chartData?.confidence?.length <= 2 && isOnlyStraight ? 'Straight line' : menuItems?.sort(customSort)[0])
+    setConfidenceArray(chartData?.confidence)
   }, [chartData])
   return (
     <Box mt={type === 'front' ? '10px' : '40px'}>
