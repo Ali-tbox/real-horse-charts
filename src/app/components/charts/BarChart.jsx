@@ -260,7 +260,7 @@ function BarChart({ text, handleItemClick, deficitLabel, selectedItem, data, lef
           datasets: [
             {
               label: 'none',
-              data: [Math.round(parseInt(leftData)), Math.round(parseInt(rightData))],
+              data: [parseInt(leftData) > 87 && parseInt(leftData) !== 100 ? 82:Math.round(parseInt(leftData)),parseInt(rightData)> 87 && parseInt(rightData) !== 100 ? 82: Math.round(parseInt(rightData))],
               backgroundColor: [
                 parseInt(leftData) > parseInt(rightData) ? getColorByRange(type, 0) : getColorByRange(type, parseInt(deficitLabel)),
                 parseInt(rightData) > parseInt(leftData) ? getColorByRange(type, 0) : getColorByRange(type, parseInt(deficitLabel)),

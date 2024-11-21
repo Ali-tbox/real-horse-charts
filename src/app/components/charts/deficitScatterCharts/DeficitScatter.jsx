@@ -32,7 +32,7 @@ function moveMedianAtEnd(array) {
 
 function DeficitScatter({ chartData, straightData, leftData, rightData, max, min, type }) {
   const items = ['All data', 'Left circle', 'Right circle', 'Straight line']
-  const strideItems = ['All strides', 'Only median', 'Max 5', 'Max 10']
+  const strideItems = [ 'Max 10','All strides', 'Only median', 'Max 5']
   const isOnlyStraight = chartData?.confidence?.some(item => item.trottype === 'straight')
   const menuItems = chartData?.confidence?.map(item => badgeValue[item.trottype])
 

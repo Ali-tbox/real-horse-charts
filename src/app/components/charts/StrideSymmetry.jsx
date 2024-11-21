@@ -88,8 +88,8 @@ function StrideSymmetry({ chartData, handleItemClick }) {
   const [hindImpactData, setHindImpactData] = useState()
   const [hindPushoffData, setHindPushoffData] = useState()
 
-  const FrontLabels = [getLabelByRange(0), getLabelByRange(largest(rightImpactData, leftImpactData)), getLabelByRange(largest(rightPushoffData, leftPushoffData))]
-  const HindLabels = [getLabelByRangeHind(0), getLabelByRangeHind(largest(rightHindImpactData, leftHindImpactData)), getLabelByRangeHind(largest(rightHindPushoffData, leftHindPushoffData))]
+  const FrontLabels = [getLabelByRange(0), getLabelByRange(foreImpactData?.absoluteDeficit), getLabelByRange(forePushoffData?.absoluteDeficit)]
+  const HindLabels = [getLabelByRangeHind(0), getLabelByRangeHind(hindImpactData?.absoluteDeficit), getLabelByRangeHind(hindPushoffData?.absoluteDeficit)]
   const uniqueFrontArray = FrontLabels.filter((obj, index, self) => index === self.findIndex(o => o.name === obj.name))
   const uniqueHindArray = HindLabels.filter((obj, index, self) => index === self.findIndex(o => o.name === obj.name))
 
@@ -136,7 +136,7 @@ function StrideSymmetry({ chartData, handleItemClick }) {
     setHindPushoffData(chartDataFiltered?.hindPushoff)
   }, [chartData])
 
-  const minBarHeight = 0.04
+  const minBarHeight = 0.1
   const getObjectByTrotType = (data, trotType) => {
     return data.find(item => item.trotType === trotType)
   }

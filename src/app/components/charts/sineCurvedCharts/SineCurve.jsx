@@ -28,7 +28,7 @@ const badgeColor = {
 
 function SineCurve({ chartData, straightData, leftData, rightData, type }) {
   const items = ['All data', 'Left circle', 'Right circle', 'Straight line']
-  const strideItems = ['All strides', 'Only median', 'Max 5', 'Max 10']
+  const strideItems = ['Max 10','All strides', 'Only median', 'Max 5']
   const [labels, setLabels] = useState()
   const isOnlyStraight = chartData?.confidence?.some(item => item.trottype === 'straight')
 
