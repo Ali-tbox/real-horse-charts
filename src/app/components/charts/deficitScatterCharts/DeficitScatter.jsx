@@ -25,9 +25,28 @@ const badgeColor = {
   right: colors.darkpurple,
   straight: colors.mustard,
 }
+const typeBound={
+front: 67,
+hind: 40
+}
 
-function moveMedianAtEnd(array) {
-  return array?.sort((a, b) => (a?.isMedian === b?.isMedian ? 0 : a?.isMedian ? 1 : -1))
+function moveMedianAtEnd(array,type) {
+  console.log('typeaqwe',type)
+  const updatedPoints = array.map(item => {
+    if (item.points) {
+      return {
+        ...item,
+        points: {
+          x: Math.abs(item.points.x) > typeBound[type] ? (item.points.x > 0 ? typeBound[type] : -typeBound[type]) : item.points.x,
+          y: Math.abs(item.points.y) > typeBound[type] ? (item.points.y > 0 ? typeBound[type] : -typeBound[type]) : item.points.y,
+        },
+      };
+    }
+    return item;
+  });
+  
+  console.log('sdsdfsds',updatedPoints)
+    return updatedPoints?.sort((a, b) => (a?.isMedian === b?.isMedian ? 0 : a?.isMedian ? 1 : -1))
 }
 
 function DeficitScatter({ chartData, straightData, leftData, rightData, max, min, type }) {
@@ -48,7 +67,6 @@ function DeficitScatter({ chartData, straightData, leftData, rightData, max, min
   const handleStrideClick = item => {
     setSelectedStrideItem(item)
   }
-  console.log('settingselectedStride', menuItems)
   useEffect(() => {
     setSelectedItem(chartData?.confidence?.length <= 2 && isOnlyStraight ? 'Straight line' : menuItems?.sort(customSort)[0])
     setConfidenceArray(chartData?.confidence)
@@ -71,9 +89,9 @@ function DeficitScatter({ chartData, straightData, leftData, rightData, max, min
           min={min}
           selectedItem={selectedItem}
           selectedStrideItem={selectedStrideItem}
-          straightData={moveMedianAtEnd(straightData)}
-          leftData={moveMedianAtEnd(leftData)}
-          rightData={moveMedianAtEnd(rightData)}
+          straightData={moveMedianAtEnd(straightData,type)}
+          leftData={moveMedianAtEnd(leftData,type)}
+          rightData={moveMedianAtEnd(rightData,type)}
         />
       </Box>
 

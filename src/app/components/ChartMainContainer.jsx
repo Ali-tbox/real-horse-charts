@@ -66,7 +66,7 @@ function ChartMainContainer() {
       <Box w='100%' bg={colors.silverGray} h={'6px'}></Box>
       <DeficitCharts chartData={dataFromIOS} handleItemClick={onClickHandler} />
       <Box w='100%' bg={colors.silverGray} h={'6px'}></Box>
-      <DeficitScatterCharts chartData={dataFromIOS} handleItemClick={onClickHandler} />
+      <DeficitScatterCharts chartData={chartData} handleItemClick={onClickHandler} />
       <Box w='100%' bg={colors.silverGray} h={'6px'}></Box>
       <SineCurvedCharts chartData={dataFromIOS} handleItemClick={onClickHandler} />
     </Box>

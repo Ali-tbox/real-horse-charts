@@ -211,7 +211,7 @@ function ScatterPieChart({ selectedStrideItem, selectedItem, rightData, leftData
               radius: [15],
               borderColor: selectedItem === 'Right circle' || selectedItem === 'All data' ? [colors.white] : 'transparent',
               backgroundColor: selectedItem === 'Right circle' || selectedItem === 'All data' ? [colors.darkpurple] : 'transparent',
-
+// clip:10,
               borderWidth: [2],
             },
             {

@@ -229,14 +229,35 @@ function BarChart({ text, handleItemClick, deficitLabel, selectedItem, data, lef
                 }
                 iconImage.src = assets.icons.chartInfo
 
-                // Add click event listener
                 chartContainer.current.addEventListener('click', function (event) {
-                  const mouseX = event.clientX - chartContainer.current.getBoundingClientRect().left
+                    const mouseX = event.clientX - chartContainer.current.getBoundingClientRect().left
                   const mouseY = event.clientY - chartContainer.current.getBoundingClientRect().top
-                  if (mouseX >= iconX && mouseX <= iconX + iconWidth && mouseY >= iconY && mouseY <= iconY + iconHeight) {
+                
+                  // Red rectangle's precise boundaries
+                  const redRectDetails = {
+                    x: rectX + labelWidth / 2 - 17,
+                    y: rectY + maxHeight / 2 - 9,
+                    width: labelWidth / 1.3,
+                    height: labelHeight - 12
+                  }
+                
+                  const isInside = 
+                    mouseX >= redRectDetails.x && 
+                    mouseX <= (redRectDetails.x + redRectDetails.width) && 
+                    mouseY >= redRectDetails.y && 
+                    mouseY <= (redRectDetails.y + redRectDetails.height)
+                
+                  if (isInside) {
                     handleItemClick(`stride-symmetry ${type} ${text}`)
                   }
-                })
+                });
+                // chartContainer.current.addEventListener('click', function (event) {
+                //   const mouseX = event.clientX - chartContainer.current.getBoundingClientRect().left
+                //   const mouseY = event.clientY - chartContainer.current.getBoundingClientRect().top
+                //   if (mouseX >= iconX && mouseX <= iconX + iconWidth && mouseY >= iconY && mouseY <= iconY + iconHeight) {
+                //     handleItemClick(`stride-symmetry ${type} ${text}`)
+                //   }
+                // })
 
                 ctx.fillStyle = '#181818'
                 ctx.font = 'bold 12px Noto Sans'
@@ -260,7 +281,10 @@ function BarChart({ text, handleItemClick, deficitLabel, selectedItem, data, lef
           datasets: [
             {
               label: 'none',
-              data: [parseInt(leftData) > 87 && parseInt(leftData) !== 100 ? 82:Math.round(parseInt(leftData)),parseInt(rightData)> 87 && parseInt(rightData) !== 100 ? 82: Math.round(parseInt(rightData))],
+              data: [
+                parseInt(leftData) > 87 && parseInt(leftData) !== 100 ? 82 : Math.round(parseInt(leftData)),
+                parseInt(rightData) > 87 && parseInt(rightData) !== 100 ? 82 : Math.round(parseInt(rightData)),
+              ],
               backgroundColor: [
                 parseInt(leftData) > parseInt(rightData) ? getColorByRange(type, 0) : getColorByRange(type, parseInt(deficitLabel)),
                 parseInt(rightData) > parseInt(leftData) ? getColorByRange(type, 0) : getColorByRange(type, parseInt(deficitLabel)),
