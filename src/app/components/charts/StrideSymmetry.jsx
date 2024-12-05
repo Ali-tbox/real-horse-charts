@@ -150,7 +150,7 @@ function StrideSymmetry({ chartData, handleItemClick }) {
           <Text fontSize='16px' color={colors.dullblack} lineHeight={'22px'} fontWeight={700} fontFamily='Nunito'>
             Stride Symmetry
           </Text>
-          <Icon onClick={() => handleItemClick('stride-symmetry')} imageHeight={'20px'} imageWidth={'20px'} image={assets.icons.darkInfo} />
+          {/* <Icon onClick={() => handleItemClick('stride-symmetry')} imageHeight={'20px'} imageWidth={'20px'} image={assets.icons.darkInfo} /> */}
         </Box>
         <SymmetryMenu
           isSingleValue={chartData?.confidence?.length <= 2 && isOnlyStraight}
