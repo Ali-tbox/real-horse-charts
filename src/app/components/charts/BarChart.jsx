@@ -176,7 +176,7 @@ function BarChart({ text, handleItemClick, deficitLabel, selectedItem, data, lef
             meta.data.forEach((element, index) => {
               const value = dataset.data[index]
               const label = value.toString()
-              if (label && !isNaN(label) && ((label < 88 && type === 'front') || (label < 95 && type === 'hind'))) {
+              if (label && !isNaN(label) && ((label < 88 && type === 'front') || (label < 95 && type === 'hind') || (label < 95 && type === 'withers'))) {
                 const maxHeight = ((100 - label) / scales.y.bottom) * 171
                 const x = element.x
                 const y = element.y
@@ -335,7 +335,7 @@ function BarChart({ text, handleItemClick, deficitLabel, selectedItem, data, lef
               },
               formatter: value => {
                 console.log('cvaluawe', isNaN(value))
-                if (isNaN(value) || (100 - value < 23 && type === 'front') || (100 - value < 14 && type === 'hind')) return []
+                if (isNaN(value) || (100 - value < 23 && type === 'front') || (100 - value < 14 && type === 'hind') || (100 - value < 14 && type === 'withers')) return []
                 return []
               }, // Display the data value as the label
               offset: 10,

@@ -10,7 +10,7 @@ import StrideSymmetryGraph from './StrideSymmetryGraph'
 import SymmetryMenu from './SymmetryMenu'
 import assets from '../../assets/assests'
 import colors from '../../config/colors'
-import { customSort, getLabelByRange, getLabelByRangeHind, presentedExtrema } from '../../utils/helperFunc'
+import { customSort, getLabelByRange, getLabelByRangeWithers, getLabelByRangeHind, presentedExtrema } from '../../utils/helperFunc'
 
 const calculatePercentage = (a, b) => {
   return (a / b) * 100
@@ -25,7 +25,7 @@ const badgeValue = {
   allfootage: 'All data',
 }
 
-function StrideSymmetry({ chartData, handleItemClick }) {
+function StrideSymmetry({ withersToggleBtn, chartData, handleItemClick }) {
   const items = ['Left circle', 'Right circle', 'Straight line']
   const isOnlyStraight = chartData?.confidence?.some(item => item.trottype === 'straight')
   const menuItems = chartData?.confidence?.map(item => badgeValue[item.trottype])
@@ -53,6 +53,24 @@ function StrideSymmetry({ chartData, handleItemClick }) {
   /// Front right circle push off
   const rightLegRightCircleForePushoffData = chartData?.stridesymmetry?.forerightpushoff?.filter(obj => obj.trotType === 'right')?.find(obj => obj.level)
   const leftLegRightCircleForePushoffData = chartData?.stridesymmetry?.foreleftpushoff?.filter(obj => obj.trotType === 'right')?.find(obj => obj.level)
+  /// Withers right circle impact
+  const leftLegRightCircleWithersImpactData = chartData?.stridesymmetry?.withersleftimpact?.filter(obj => obj.trotType === 'right')?.find(obj => obj.level)
+  const rightLegRightCircleWithersImpactData = chartData?.stridesymmetry?.withersrightimpact?.filter(obj => obj.trotType === 'right')?.find(obj => obj.level)
+  /// Withers left circle impact
+  const leftLegLeftCircleWithersImpactData = chartData?.stridesymmetry?.withersleftimpact?.filter(obj => obj.trotType === 'left')?.find(obj => obj.level)
+  const rightLegLeftCircleWithersImpactData = chartData?.stridesymmetry?.withersrightimpact?.filter(obj => obj.trotType === 'left')?.find(obj => obj.level)
+  /// Withers left circle push off
+  const leftLegLeftCircleWithersPushoffData = chartData?.stridesymmetry?.withersleftpushoff?.filter(obj => obj.trotType === 'left')?.find(obj => obj.level)
+  const rightLegLeftCircleWithersPushoffData = chartData?.stridesymmetry?.withersrightpushoff?.filter(obj => obj.trotType === 'left')?.find(obj => obj.level)
+  /// Withers right circle push off
+  const rightLegRightCircleWithersPushoffData = chartData?.stridesymmetry?.withersrightpushoff?.filter(obj => obj.trotType === 'right')?.find(obj => obj.level)
+  const leftLegRightCircleWithersPushoffData = chartData?.stridesymmetry?.withersleftpushoff?.filter(obj => obj.trotType === 'right')?.find(obj => obj.level)
+  /// Withers Straight circle impact
+  const leftLegStraightCircleWithersImpactData = chartData?.stridesymmetry?.withersleftimpact?.filter(obj => obj.trotType === 'straight')?.find(obj => obj.level)
+  const rightLegStraightCircleWithersImpactData = chartData?.stridesymmetry?.withersrightimpact?.filter(obj => obj.trotType === 'straight')?.find(obj => obj.level)
+  /// Withers left circle push off
+  const leftLegStraightCircleWithersPushoffData = chartData?.stridesymmetry?.withersleftpushoff?.filter(obj => obj.trotType === 'straight')?.find(obj => obj.level)
+  const rightLegStraightCircleWithersPushoffData = chartData?.stridesymmetry?.withersrightpushoff?.filter(obj => obj.trotType === 'straight')?.find(obj => obj.level)
   /// Hind right circle impact
   const leftLegRightCircleHindImpactData = chartData?.stridesymmetry?.hindleftimpact?.filter(obj => obj.trotType === 'right')?.find(obj => obj.level)
   const rightLegRightCircleHindImpactData = chartData?.stridesymmetry?.hindrightimpact?.filter(obj => obj.trotType === 'right')?.find(obj => obj.level)
@@ -77,6 +95,19 @@ function StrideSymmetry({ chartData, handleItemClick }) {
   const [leftImpactData, setLeftImpactData] = useState(leftLegLeftCircleForeImpactData?.level < rightLegLeftCircleForeImpactData?.level ? 0 : leftLegLeftCircleForeImpactData?.level)
   const [rightPushoffData, setRightPushoffData] = useState(rightLegLeftCircleForePushoffData?.level < leftLegLeftCircleForePushoffData?.level ? 0 : rightLegLeftCircleForePushoffData?.level)
   const [leftPushoffData, setLeftPushoffData] = useState(leftLegLeftCircleForePushoffData?.level < rightLegLeftCircleForePushoffData?.level ? 0 : leftLegLeftCircleForePushoffData?.level)
+  /// withers
+  const [rightWithersImpactData, setRightWithersImpactData] = useState(
+    rightLegLeftCircleWithersImpactData?.level < leftLegLeftCircleWithersImpactData?.level ? 0 : rightLegLeftCircleWithersImpactData?.level,
+  )
+  const [leftWithersImpactData, setLeftWithersImpactData] = useState(
+    leftLegLeftCircleWithersImpactData?.level < rightLegLeftCircleWithersImpactData?.level ? 0 : leftLegLeftCircleWithersImpactData?.level,
+  )
+  const [rightWithersPushoffData, setRightWithersPushoffData] = useState(
+    rightLegLeftCircleWithersPushoffData?.level < leftLegLeftCircleWithersPushoffData?.level ? 0 : rightLegLeftCircleWithersPushoffData?.level,
+  )
+  const [leftWithersPushoffData, setLeftWithersPushoffData] = useState(
+    leftLegLeftCircleWithersPushoffData?.level < rightLegLeftCircleWithersPushoffData?.level ? 0 : leftLegLeftCircleWithersPushoffData?.level,
+  )
   /// hind
   const [rightHindImpactData, setRightHindImpactData] = useState(rightLegLeftCircleHindImpactData?.level < leftLegLeftCircleHindImpactData?.level ? 0 : rightLegLeftCircleHindImpactData?.level)
   const [leftHindImpactData, setLeftHindImpactData] = useState(leftLegLeftCircleHindImpactData?.level < rightLegLeftCircleHindImpactData?.level ? 0 : leftLegLeftCircleHindImpactData?.level)
@@ -87,11 +118,15 @@ function StrideSymmetry({ chartData, handleItemClick }) {
   const [forePushoffData, setForePushoffData] = useState()
   const [hindImpactData, setHindImpactData] = useState()
   const [hindPushoffData, setHindPushoffData] = useState()
+  const [withersImpactData, setWithersImpactData] = useState()
+  const [withersPushoffData, setWithersPushoffData] = useState()
 
   const FrontLabels = [getLabelByRange(0), getLabelByRange(foreImpactData?.absoluteDeficit), getLabelByRange(forePushoffData?.absoluteDeficit)]
   const HindLabels = [getLabelByRangeHind(0), getLabelByRangeHind(hindImpactData?.absoluteDeficit), getLabelByRangeHind(hindPushoffData?.absoluteDeficit)]
+  const WithersLabels = [getLabelByRangeWithers(0), getLabelByRangeWithers(withersImpactData?.absoluteDeficit), getLabelByRangeWithers(withersPushoffData?.absoluteDeficit)]
   const uniqueFrontArray = FrontLabels.filter((obj, index, self) => index === self.findIndex(o => o.name === obj.name))
   const uniqueHindArray = HindLabels.filter((obj, index, self) => index === self.findIndex(o => o.name === obj.name))
+  const uniqueWithersArray = WithersLabels.filter((obj, index, self) => index === self.findIndex(o => o.name === obj.name))
 
   console.log('dasdasd', uniqueHindArray)
 
@@ -102,6 +137,8 @@ function StrideSymmetry({ chartData, handleItemClick }) {
       const chartData = getObjectByTrotType(filteredChartData, 'left')
       setForeImpactData(chartData?.foreImpact)
       setForePushoffData(chartData?.forePushoff)
+      setWithersImpactData(chartData?.withersImpact)
+      setWithersPushoffData(chartData?.withersPushoff)
       setHindImpactData(chartData?.hindImpact)
       setHindPushoffData(chartData?.hindPushoff)
     }
@@ -109,6 +146,8 @@ function StrideSymmetry({ chartData, handleItemClick }) {
       const chartData = getObjectByTrotType(filteredChartData, 'right')
       setForeImpactData(chartData?.foreImpact)
       setForePushoffData(chartData?.forePushoff)
+      setWithersImpactData(chartData?.withersImpact)
+      setWithersPushoffData(chartData?.withersPushoff)
       setHindImpactData(chartData?.hindImpact)
       setHindPushoffData(chartData?.hindPushoff)
     }
@@ -116,6 +155,8 @@ function StrideSymmetry({ chartData, handleItemClick }) {
       const chartData = getObjectByTrotType(filteredChartData, 'straight')
       setForeImpactData(chartData?.foreImpact)
       setForePushoffData(chartData?.forePushoff)
+      setWithersImpactData(chartData?.withersImpact)
+      setWithersPushoffData(chartData?.withersPushoff)
       setHindImpactData(chartData?.hindImpact)
       setHindPushoffData(chartData?.hindPushoff)
     }
@@ -123,6 +164,8 @@ function StrideSymmetry({ chartData, handleItemClick }) {
       const chartData = getObjectByTrotType(filteredChartData, 'all')
       setForeImpactData(chartData?.foreImpact)
       setForePushoffData(chartData?.forePushoff)
+      setWithersImpactData(chartData?.withersImpact)
+      setWithersPushoffData(chartData?.withersPushoff)
       setHindImpactData(chartData?.hindImpact)
       setHindPushoffData(chartData?.hindPushoff)
     }
@@ -132,6 +175,8 @@ function StrideSymmetry({ chartData, handleItemClick }) {
     const chartDataFiltered = getObjectByTrotType(filteredChartData, 'all')
     setForeImpactData(chartDataFiltered?.foreImpact)
     setForePushoffData(chartDataFiltered?.forePushoff)
+    setWithersImpactData(chartDataFiltered?.withersImpact)
+    setWithersPushoffData(chartDataFiltered?.withersPushoff)
     setHindImpactData(chartDataFiltered?.hindImpact)
     setHindPushoffData(chartDataFiltered?.hindPushoff)
   }, [chartData])
@@ -161,6 +206,7 @@ function StrideSymmetry({ chartData, handleItemClick }) {
           label={'Straight line'}
         />
       </Box>
+      {/* front */}
       <Box display={'flex'} gap='6px'>
         <Icon image={assets.icons.trottingHorse} />
         <Text fontFamily={'Nunito'} fontWeight={700} lineHeight={'20px'} fontSize={'16px'} color={colors.textcolor}>
@@ -217,6 +263,70 @@ function StrideSymmetry({ chartData, handleItemClick }) {
             index % 2 === 0 && <SymmentryLabel key={index} text1={item.name} color1={item.color} text2={uniqueFrontArray[index + 1]?.name || ''} color2={uniqueFrontArray[index + 1]?.color || ''} />,
         )}
       </Box>
+      {/* withers */}
+      {withersToggleBtn && (
+        <>
+          <Box mt='40px' mb={'1px'} display={'flex'} gap='6px'>
+            <Icon image={assets.icons.trottingHorse3} />
+            <Text fontFamily={'Nunito'} fontWeight={700} fontSize={'16px'} lineHeight={'20px'} color={colors.textcolor}>
+              Withers
+            </Text>
+          </Box>
+          <Box gap={'23px'} display='flex'>
+            <StrideSymmetryGraph
+              handleItemClick={handleItemClick}
+              type='withers'
+              data={chartData}
+              checkValue={6}
+              selectedItem={selectedItem}
+              deficitLabel={withersImpactData?.absoluteDeficit}
+              leftData={
+                presentedExtrema('left', withersImpactData?.healtyhLeg, minBarHeight, withersImpactData?.clampedLeft, withersImpactData?.clampedRight) * 100 >= 94
+                  ? 100
+                  : presentedExtrema('left', withersImpactData?.healtyhLeg, minBarHeight, withersImpactData?.clampedLeft, withersImpactData?.clampedRight) * 100
+              }
+              rightData={
+                presentedExtrema('right', withersImpactData?.healtyhLeg, minBarHeight, withersImpactData?.clampedLeft, withersImpactData?.clampedRight) * 100 >= 94
+                  ? 100
+                  : presentedExtrema('right', withersImpactData?.healtyhLeg, minBarHeight, withersImpactData?.clampedLeft, withersImpactData?.clampedRight) * 100
+              }
+              text='Impact'
+              color1={colors.mehron}
+              color2={colors.mediumGreen}
+            />
+            <StrideSymmetryGraph
+              handleItemClick={handleItemClick}
+              type='withers'
+              data={chartData}
+              checkValue={6}
+              selectedItem={selectedItem}
+              deficitLabel={withersPushoffData?.absoluteDeficit}
+              leftData={
+                presentedExtrema('left', withersPushoffData?.healtyhLeg, minBarHeight, withersPushoffData?.clampedLeft, withersPushoffData?.clampedRight) * 100 >= 94
+                  ? 100
+                  : presentedExtrema('left', withersPushoffData?.healtyhLeg, minBarHeight, withersPushoffData?.clampedLeft, withersPushoffData?.clampedRight) * 100
+              }
+              rightData={
+                presentedExtrema('right', withersPushoffData?.healtyhLeg, minBarHeight, withersPushoffData?.clampedLeft, withersPushoffData?.clampedRight) * 100 >= 94
+                  ? 100
+                  : presentedExtrema('right', withersPushoffData?.healtyhLeg, minBarHeight, withersPushoffData?.clampedLeft, withersPushoffData?.clampedRight) * 100
+              }
+              text='Push off'
+              color1={colors.lightYellow}
+              color2={colors.mediumGreen}
+            />
+          </Box>
+          <Box display={'flex'} flexDir={'column'} gap={'10px'} mt='12px'>
+            {uniqueWithersArray?.map(
+              (item, index) =>
+                index % 2 === 0 && (
+                  <SymmentryLabel key={index} text1={item.name} color1={item.color} text2={uniqueWithersArray[index + 1]?.name || ''} color2={uniqueWithersArray[index + 1]?.color || ''} />
+                ),
+            )}
+          </Box>
+        </>
+      )}
+      {/* hind */}
       <Box mt='40px' mb={'1px'} display={'flex'} gap='6px'>
         <Icon image={assets.icons.trottingHorse1} />
         <Text fontFamily={'Nunito'} fontWeight={700} fontSize={'16px'} lineHeight={'20px'} color={colors.textcolor}>

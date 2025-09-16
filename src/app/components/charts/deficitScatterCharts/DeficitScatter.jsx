@@ -25,14 +25,15 @@ const badgeColor = {
   right: colors.darkpurple,
   straight: colors.mustard,
 }
-const typeBound={
-front: 67,
-hind: 40
+const typeBound = {
+  front: 67,
+  hind: 40,
+  withers: 40,
 }
 
-function moveMedianAtEnd(array,type) {
-  console.log('typeaqwe',type)
-  const updatedPoints = array.map(item => {
+function moveMedianAtEnd(array, type) {
+  console.log('typeaqwe', type)
+  const updatedPoints = array?.map(item => {
     if (item.points) {
       return {
         ...item,
@@ -40,18 +41,18 @@ function moveMedianAtEnd(array,type) {
           x: Math.abs(item.points.x) > typeBound[type] ? (item.points.x > 0 ? typeBound[type] : -typeBound[type]) : item.points.x,
           y: Math.abs(item.points.y) > typeBound[type] ? (item.points.y > 0 ? typeBound[type] : -typeBound[type]) : item.points.y,
         },
-      };
+      }
     }
-    return item;
-  });
-  
-  console.log('sdsdfsds',updatedPoints)
-    return updatedPoints?.sort((a, b) => (a?.isMedian === b?.isMedian ? 0 : a?.isMedian ? 1 : -1))
+    return item
+  })
+
+  console.log('sdsdfsds', updatedPoints)
+  return updatedPoints?.sort((a, b) => (a?.isMedian === b?.isMedian ? 0 : a?.isMedian ? 1 : -1))
 }
 
 function DeficitScatter({ chartData, straightData, leftData, rightData, max, min, type }) {
   const items = ['All data', 'Left circle', 'Right circle', 'Straight line']
-  const strideItems = [ 'Max 10','All strides', 'Only median', 'Max 5']
+  const strideItems = ['Max 10', 'All strides', 'Only median', 'Max 5']
   const isOnlyStraight = chartData?.confidence?.some(item => item.trottype === 'straight')
   const menuItems = chartData?.confidence?.map(item => badgeValue[item.trottype])
 
@@ -74,9 +75,9 @@ function DeficitScatter({ chartData, straightData, leftData, rightData, max, min
   return (
     <Box w='100%' mt={type === 'front' ? '10px' : '40px'}>
       <Box paddingX={'16px'} display={'flex'} gap='6px'>
-        <Icon image={type === 'front' ? assets.icons.trottingHorse : assets.icons.trottingHorse1} />
+        <Icon image={type === 'front' ? assets.icons.trottingHorse : type === 'hind' ? assets.icons.trottingHorse1 : assets.icons.trottingHorse3} />
         <Text fontFamily={'Nunito'} fontWeight={700} fontSize={'16px'} color={colors.textcolor}>
-          {type === 'front' ? 'Front' : 'Hind'}
+          {type === 'front' ? 'Front' : type === 'hind' ? 'Hind' : 'Withers'}
         </Text>
       </Box>
       <Box paddingX={'16px'} mt='17px' gap='20px' display={'flex'}>
@@ -89,9 +90,9 @@ function DeficitScatter({ chartData, straightData, leftData, rightData, max, min
           min={min}
           selectedItem={selectedItem}
           selectedStrideItem={selectedStrideItem}
-          straightData={moveMedianAtEnd(straightData,type)}
-          leftData={moveMedianAtEnd(leftData,type)}
-          rightData={moveMedianAtEnd(rightData,type)}
+          straightData={moveMedianAtEnd(straightData, type)}
+          leftData={moveMedianAtEnd(leftData, type)}
+          rightData={moveMedianAtEnd(rightData, type)}
         />
       </Box>
 

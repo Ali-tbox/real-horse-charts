@@ -6,7 +6,7 @@ import assets from '../../../assets/assests'
 import Icon from '../../form/Icon'
 // import chartData from '../chartData'
 
-function DeficitScatterCharts({ chartData, handleItemClick }) {
+function DeficitScatterCharts({ withersToggleBtn, chartData, handleItemClick }) {
   return (
     <Box w='100%' paddingY={'32px'}>
       <Box paddingX={'16px'} paddingY={'7px'} alignItems={'center'} display={'flex'} gap={'6px'}>
@@ -24,6 +24,18 @@ function DeficitScatterCharts({ chartData, handleItemClick }) {
         min={-75}
         type='front'
       />
+
+      {withersToggleBtn && (
+        <DeficitScatter
+          chartData={chartData}
+          straightData={chartData?.deficitScatter?.straightWithers}
+          leftData={chartData?.deficitScatter?.leftWithers}
+          rightData={chartData?.deficitScatter?.rightWithers}
+          max={45}
+          min={-45}
+          type='withers'
+        />
+      )}
 
       <DeficitScatter
         chartData={chartData}

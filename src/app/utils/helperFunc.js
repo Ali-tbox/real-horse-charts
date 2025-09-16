@@ -57,6 +57,23 @@ function getColorByRange(type, number) {
       return 'black' // Default color if the number is out of specified ranges
     }
   }
+  if (type === 'withers') {
+    if (number >= 0 && number <= 6) {
+      return colors.mediumGreen
+    } else if (number > 6 && number <= 14) {
+      return colors.darkGreen
+    } else if (number > 14 && number <= 22) {
+      return colors.lightYellow
+    } else if (number > 22 && number <= 30) {
+      return colors.paleYellow
+    } else if (number > 30 && number <= 38) {
+      return colors.mediumRed
+    } else if (number > 38) {
+      return colors.mehron
+    } else {
+      return 'black' // Default color if the number is out of specified ranges
+    }
+  }
 }
 
 const customSort = (a, b) => {
@@ -85,6 +102,23 @@ function getLabelByRange(number) {
 }
 
 function getLabelByRangeHind(number) {
+  if (number >= 0 && number <= 6) {
+    return { name: 'Normal symmetry', color: colors.mediumGreen }
+  } else if (number > 6 && number <= 14) {
+    return { name: 'Mild asymmetry', color: colors.darkGreen }
+  } else if (number > 14 && number <= 22) {
+    return { name: 'Mild to moderate asymmetry', color: colors.lightYellow }
+  } else if (number > 22 && number <= 30) {
+    return { name: 'Moderate asymmetry', color: colors.paleYellow }
+  } else if (number > 30 && number <= 38) {
+    return { name: 'Moderate to severe asymmetry', color: colors.mediumRed }
+  } else if (number > 38) {
+    return { name: 'Severe asymmetry', color: colors.mehron }
+  } else {
+    return {} // Default color if the number is out of specified ranges
+  }
+}
+function getLabelByRangeWithers(number) {
   if (number >= 0 && number <= 6) {
     return { name: 'Normal symmetry', color: colors.mediumGreen }
   } else if (number > 6 && number <= 14) {
@@ -271,4 +305,5 @@ export {
   customSort,
   getLabelByRange,
   getLabelByRangeHind,
+  getLabelByRangeWithers,
 }

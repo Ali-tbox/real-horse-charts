@@ -7,7 +7,7 @@ import assets from '../../../assets/assests'
 import Icon from '../../form/Icon'
 import SymmentryLabel from '../SymmentryLabel'
 import SymmentryRoundLabel from '../SymmentryRoundLabel'
-import { getLabelByRange, getLabelByRangeHind } from '../../../utils/helperFunc'
+import { getLabelByRange, getLabelByRangeHind, getLabelByRangeWithers } from '../../../utils/helperFunc'
 
 const badgeValue = {
   left: 'Left circle',
@@ -28,7 +28,7 @@ const badgeColor = {
 
 function SineCurve({ chartData, straightData, leftData, rightData, type }) {
   const items = ['All data', 'Left circle', 'Right circle', 'Straight line']
-  const strideItems = ['Max 10','All strides', 'Only median', 'Max 5']
+  const strideItems = ['Max 10', 'All strides', 'Only median', 'Max 5']
   const [labels, setLabels] = useState()
   const isOnlyStraight = chartData?.confidence?.some(item => item.trottype === 'straight')
 
@@ -79,6 +79,20 @@ function SineCurve({ chartData, straightData, leftData, rightData, type }) {
         setLabels(getAnnotations(chartData?.sineCurve?.straighthind))
       }
     }
+    if (type === 'withers') {
+      if (item === 'All data') {
+        setLabels([...getAnnotations(chartData?.sineCurve?.leftWithers), ...getAnnotations(chartData?.sineCurve?.rightWithers), ...getAnnotations(chartData?.sineCurve?.straightWithers)])
+      }
+      if (item === 'Left circle') {
+        setLabels(getAnnotations(chartData?.sineCurve?.leftWithers))
+      }
+      if (item === 'Right circle') {
+        setLabels(getAnnotations(chartData?.sineCurve?.rightWithers))
+      }
+      if (item === 'Straight line') {
+        setLabels(getAnnotations(chartData?.sineCurve?.straightWithers))
+      }
+    }
   }
 
   const handleStrideClick = item => {
@@ -90,7 +104,9 @@ function SineCurve({ chartData, straightData, leftData, rightData, type }) {
       array
         ?.filter(item => item.isMedian) // Filter items where isMedian is true
         ?.flatMap(item => item.rulers) // Flatten the array of rulers for each item
-        ?.map(ruler => (type === 'front' ? getLabelByRange(parseInt(ruler.annotation)) : getLabelByRangeHind(parseInt(ruler.annotation)))) // Extract only the annotation values
+        ?.map(ruler =>
+          type === 'front' ? getLabelByRange(parseInt(ruler.annotation)) : type === 'hind' ? getLabelByRangeHind(parseInt(ruler.annotation)) : getLabelByRangeWithers(parseInt(ruler.annotation)),
+        ) // Extract only the annotation values
         ?.filter(annotation => annotation !== null && annotation !== undefined) || [] // Filter out null or undefined values and return an empty array if conditions are not met
     )
   }
@@ -103,15 +119,18 @@ function SineCurve({ chartData, straightData, leftData, rightData, type }) {
     if (type === 'hind') {
       setLabels([...getAnnotations(chartData?.sineCurve?.leftHind), ...getAnnotations(chartData?.sineCurve?.rightHind), ...getAnnotations(chartData?.sineCurve?.straighthind)])
     }
+    if (type === 'withers') {
+      setLabels([...getAnnotations(chartData?.sineCurve?.leftWithers), ...getAnnotations(chartData?.sineCurve?.rightWithers), ...getAnnotations(chartData?.sineCurve?.straightWithers)])
+    }
     setSelectedItem(chartData?.confidence?.length <= 2 && isOnlyStraight ? 'Straight line' : menuItems?.sort(customSort)[0])
     setConfidenceArray(chartData?.confidence)
   }, [chartData])
   return (
     <Box mt={type === 'front' ? '10px' : '40px'}>
       <Box display={'flex'} gap='6px'>
-        <Icon image={type === 'front' ? assets.icons.trottingHorse : assets.icons.trottingHorse1} />
+        <Icon image={type === 'front' ? assets.icons.trottingHorse : type === 'hind' ? assets.icons.trottingHorse1 : assets.icons.trottingHorse3} />
         <Text fontFamily={'Nunito'} fontWeight={700} fontSize={'16px'} color={colors.textcolor}>
-          {type === 'front' ? 'Front' : 'Hind'}
+          {type === 'front' ? 'Front' : type === 'hind' ? 'Hind' : 'Withers'}
         </Text>
       </Box>
       <Box mt='16px' gap='20px' display={'flex'}>

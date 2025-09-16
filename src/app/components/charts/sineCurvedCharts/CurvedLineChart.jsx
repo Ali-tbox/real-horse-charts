@@ -138,10 +138,10 @@ function CurvedLineChart({ selectedStrideItem, selectedItem, straightData, right
         afterDatasetsDraw: (chart, args, options) => {
           const { ctx, scales } = chart
           if (selectedItem !== 'All data') {
-            if ((type === 'front' && parseInt(minDiff?.annotation) > 12) || (type === 'hind' && parseInt(minDiff?.annotation) > 6)) {
+            if ((type === 'front' && parseInt(minDiff?.annotation) > 12) || (type === 'hind' && parseInt(minDiff?.annotation) > 6) || (type === 'withers' && parseInt(minDiff?.annotation) > 6)) {
               drawLineWithCircularPoint(ctx, scales, startPoint, endPoint, deficitColor, minDiff?.annotation, 'min')
             }
-            if ((type === 'front' && parseInt(maxDiff?.annotation) > 12) || (type === 'hind' && parseInt(maxDiff?.annotation) > 6)) {
+            if ((type === 'front' && parseInt(maxDiff?.annotation) > 12) || (type === 'hind' && parseInt(maxDiff?.annotation) > 6) || (type === 'withers' && parseInt(maxDiff?.annotation) > 6)) {
               drawLineWithCircularPoint(ctx, scales, pushoffStartPoint, pushoffEndPoint, pushOffDeficitColor, maxDiff?.annotation, 'max')
             }
           }

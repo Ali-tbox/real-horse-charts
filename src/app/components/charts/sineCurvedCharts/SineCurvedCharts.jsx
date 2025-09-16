@@ -6,7 +6,7 @@ import Icon from '../../form/Icon'
 import assets from '../../../assets/assests'
 // import chartData from '../chartData'
 
-function SineCurvedCharts({ chartData, handleItemClick }) {
+function SineCurvedCharts({ withersToggleBtn, chartData, handleItemClick }) {
   // console.log("SineCurvedCh ", chartData?.sineCurve?.rightFore);
   return (
     <Box w='100%' paddingX={'16px'} paddingY={'32px'}>
@@ -18,6 +18,15 @@ function SineCurvedCharts({ chartData, handleItemClick }) {
       </Box>
       <SineCurve chartData={chartData} straightData={chartData?.sineCurve?.straightFore} leftData={chartData?.sineCurve?.leftFore} rightData={chartData?.sineCurve?.rightFore} type='front' />
 
+      {withersToggleBtn && (
+        <SineCurve
+          chartData={chartData}
+          straightData={chartData?.sineCurve?.straightWithers}
+          leftData={chartData?.sineCurve?.leftWithers}
+          rightData={chartData?.sineCurve?.rightWithers}
+          type='withers'
+        />
+      )}
       <SineCurve chartData={chartData} straightData={chartData?.sineCurve?.straighthind} leftData={chartData?.sineCurve?.leftHind} rightData={chartData?.sineCurve?.rightHind} type='hind' />
     </Box>
   )
