@@ -90,7 +90,7 @@ function ChartMainContainer() {
       }
       setDataFromIOS(e.detail.data)
       // setShowWithersToggle(isNewDataFormat)
-      setWithersToggleValue(e.detail.withersToggle)
+      setWithersToggleValue(isNewDataFormat === true ? e.detail.withersToggle : false)
       console.log('set states successfully')
     },
     [setDataFromIOS, setWithersToggleValue, setShowWithersToggle],
