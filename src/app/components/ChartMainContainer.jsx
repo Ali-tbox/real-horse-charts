@@ -149,34 +149,38 @@ function ChartMainContainer() {
       {showWithersToggle && (
         <>
           <Box w='100%' paddingX={'16px'} paddingY='32px'>
-            <Box pb={'7px'} display='flex' justifyContent='space-between' alignItems='center'>
-              <Text color={colors.dullblack} fontSize='16px' fontWeight={700}>
-                Show withers data
-              </Text>
-              <Switch
-                size='lg'
-                checked={withersToggleValue}
-                onChange={handleWithersToggle}
-                sx={{
+            <Box
+              sx={{
+                WebkitTapHighlightColor: 'transparent',
+                '&:focus': {
+                  boxShadow: 'none',
+                  outline: 'none',
+                },
+                '& .chakra-switch': {
+                  WebkitTapHighlightColor: 'transparent',
+                },
+                '& .chakra-switch__track': {
                   WebkitTapHighlightColor: 'transparent',
                   '&:focus': {
                     boxShadow: 'none',
-                    outline: 'none',
                   },
-                  '& .chakra-switch__track': {
-                    WebkitTapHighlightColor: 'transparent',
-                    '&:focus': {
-                      boxShadow: 'none',
-                    },
+                },
+                '& .chakra-switch__thumb': {
+                  WebkitTapHighlightColor: 'transparent',
+                  '&:focus': {
+                    boxShadow: 'none',
                   },
-                  '& .chakra-switch__thumb': {
-                    WebkitTapHighlightColor: 'transparent',
-                    '&:focus': {
-                      boxShadow: 'none',
-                    },
-                  },
-                }}
-              />
+                },
+              }}
+              pb={'7px'}
+              display='flex'
+              justifyContent='space-between'
+              alignItems='center'
+            >
+              <Text color={colors.dullblack} fontSize='16px' fontWeight={700}>
+                Show withers data
+              </Text>
+              <Switch size='lg' checked={withersToggleValue} onChange={handleWithersToggle} />
             </Box>
             <Box>
               <Text
