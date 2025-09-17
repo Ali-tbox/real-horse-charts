@@ -19,6 +19,7 @@ function ChartMainContainer() {
   // };
   const [dataFromIOS, setDataFromIOS] = useState('')
   const [withersToggleValue, setWithersToggleValue] = useState(false)
+  const [showWithersToggle, setShowWithersToggle] = useState(false)
 
   useEffect(() => {
     // Adding event for IOS app
@@ -65,11 +66,34 @@ function ChartMainContainer() {
       console.log('Toggle received:', e.detail?.withersToggle)
       console.log('Toggle type:', typeof e.detail.withersToggle)
 
+      // Parse data if it's a string
+      let parsedData = e.detail.data
+      if (typeof e.detail.data === 'string') {
+        try {
+          parsedData = JSON.parse(e.detail.data)
+        } catch (error) {
+          console.error('Error parsing data:', error)
+        }
+      }
+      // Check if isWitherData property exists (only in new data)
+      const isNewDataFormat = parsedData && 'isWitherData' in parsedData
+      console.log('Is new data format:', isNewDataFormat)
+      console.log('Available keys:', parsedData ? Object.keys(parsedData) : 'None')
+      if (isNewDataFormat) {
+        // New data: use isWitherData value (true/false)
+        setShowWithersToggle(parsedData.isWitherData)
+        console.log('New data - isWitherData:', parsedData.isWitherData)
+      } else {
+        // Old data: no isWitherData property, hide toggle
+        setShowWithersToggle(false)
+        console.log('Old data - hiding withers toggle')
+      }
       setDataFromIOS(e.detail.data)
+      // setShowWithersToggle(isNewDataFormat)
       setWithersToggleValue(e.detail.withersToggle)
       console.log('set states successfully')
     },
-    [setDataFromIOS, setWithersToggleValue],
+    [setDataFromIOS, setWithersToggleValue, setShowWithersToggle],
   )
 
   const onClickHandler = name => {
@@ -122,32 +146,59 @@ function ChartMainContainer() {
       <StridePrecision chartData={dataFromIOS} handleItemClick={onClickHandler} />
       <Box w='100%' bg={colors.silverGray} h={'6px'}></Box>
       {/* withers detail box and toggle */}
-      <Box w='100%' paddingX={'16px'} paddingY='32px'>
-        <Box pb={'7px'} display='flex' justifyContent='space-between' alignItems='center'>
-          <Text color={colors.dullblack} fontSize='16px' fontWeight={700}>
-            Show withers data
-          </Text>
-          <Switch size='lg' checked={withersToggleValue} onChange={handleWithersToggle} />
-        </Box>
-        <Box>
-          <Text
-            color={colors.textcolor}
-            maxWidth='271px' // Constrain width to force wrapping
-            overflow='hidden'
-            display='-webkit-box'
-            fontSize='14px' // Match the size from image
-            lineHeight='1.4'
-            sx={{
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-            }}
-            fontWeight={400}
-          >
-            Description goes here can to 2 lines maximum...
-          </Text>
-        </Box>
-      </Box>
-      <Box w='100%' bg={colors.silverGray} h={'6px'}></Box>
+      {showWithersToggle && (
+        <>
+          <Box w='100%' paddingX={'16px'} paddingY='32px'>
+            <Box pb={'7px'} display='flex' justifyContent='space-between' alignItems='center'>
+              <Text color={colors.dullblack} fontSize='16px' fontWeight={700}>
+                Show withers data
+              </Text>
+              <Switch
+                size='lg'
+                checked={withersToggleValue}
+                onChange={handleWithersToggle}
+                sx={{
+                  WebkitTapHighlightColor: 'transparent',
+                  '&:focus': {
+                    boxShadow: 'none',
+                    outline: 'none',
+                  },
+                  '& .chakra-switch__track': {
+                    WebkitTapHighlightColor: 'transparent',
+                    '&:focus': {
+                      boxShadow: 'none',
+                    },
+                  },
+                  '& .chakra-switch__thumb': {
+                    WebkitTapHighlightColor: 'transparent',
+                    '&:focus': {
+                      boxShadow: 'none',
+                    },
+                  },
+                }}
+              />
+            </Box>
+            <Box>
+              <Text
+                color={colors.textcolor}
+                maxWidth='271px' // Constrain width to force wrapping
+                overflow='hidden'
+                display='-webkit-box'
+                fontSize='14px' // Match the size from image
+                lineHeight='1.4'
+                sx={{
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                }}
+                fontWeight={400}
+              >
+                Description goes here can to 2 lines maximum...
+              </Text>
+            </Box>
+          </Box>
+          <Box w='100%' bg={colors.silverGray} h={'6px'}></Box>
+        </>
+      )}
       <StrideSymmetry withersToggleBtn={withersToggleValue} chartData={dataFromIOS} handleItemClick={onClickHandler} />
       <Box w='100%' bg={colors.silverGray} h={'6px'}></Box>
       <DeficitCharts withersToggleBtn={withersToggleValue} chartData={dataFromIOS} handleItemClick={onClickHandler} />
