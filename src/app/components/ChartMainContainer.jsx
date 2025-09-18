@@ -22,51 +22,15 @@ function ChartMainContainer() {
   const [showWithersToggle, setShowWithersToggle] = useState(false)
 
   useEffect(() => {
-    // Adding event for IOS app
-    console.log('Adding iosEvent listener...')
     window.addEventListener('iosEvent', iosEventHandler)
-    console.log('Event listener added successfully')
     return () => {
-      console.log('Cleaning up: Removing iosEvent listener')
       window.removeEventListener('iosEvent', iosEventHandler)
-      console.log('Event listener removed')
     }
   }, [])
 
-  // useEffect(() => {
-  //   window.addEventListener('iosEvent', iosEventHandler)
-
-  //   // Auto-load dummy data in web browser
-  //   const isWebBrowser = !window?.webkit?.messageHandlers?.IOS_BRIDGE
-
-  //   if (isWebBrowser) {
-  //     setTimeout(() => {
-  //       // Simulate actual iOS event dispatch
-  //       const customEvent = new CustomEvent('iosEvent', {
-  //         detail: {
-  //           data: chartData,
-  //           withersToggle: true,
-  //         },
-  //       })
-  //       window.dispatchEvent(customEvent) // This will trigger iosEventHandler properly
-  //     }, 100)
-  //   }
-
-  //   return () => window.removeEventListener('iosEvent', iosEventHandler)
-  // }, [])
   const iosEventHandler = useCallback(
     e => {
-      console.log('Full event object:', e)
-      console.log('Event type:', e.type)
       console.log('Event detail:', e.detail)
-      console.log('Received data from IOS : ' + e.detail.data)
-      console.log('Event triggered! Detail:', e.detail)
-      console.log('Data received:', e.detail?.data)
-      console.log('Data type:', typeof e.detail.data)
-      console.log('Toggle received:', e.detail?.withersToggle)
-      console.log('Toggle type:', typeof e.detail.withersToggle)
-
-      // Parse data if it's a string
       let parsedData = e.detail.data
       if (typeof e.detail.data === 'string') {
         try {
@@ -75,23 +39,14 @@ function ChartMainContainer() {
           console.error('Error parsing data:', error)
         }
       }
-      // Check if isWitherData property exists (only in new data)
       const isNewDataFormat = parsedData && 'isWitherData' in parsedData
-      console.log('Is new data format:', isNewDataFormat)
-      console.log('Available keys:', parsedData ? Object.keys(parsedData) : 'None')
       if (isNewDataFormat) {
-        // New data: use isWitherData value (true/false)
         setShowWithersToggle(parsedData.isWitherData)
-        console.log('New data - isWitherData:', parsedData.isWitherData)
       } else {
-        // Old data: no isWitherData property, hide toggle
         setShowWithersToggle(false)
-        console.log('Old data - hiding withers toggle')
       }
       setDataFromIOS(e.detail.data)
-      // setShowWithersToggle(isNewDataFormat)
       setWithersToggleValue(isNewDataFormat === true ? e.detail.withersToggle : false)
-      console.log('set states successfully')
     },
     [setDataFromIOS, setWithersToggleValue, setShowWithersToggle],
   )
@@ -104,25 +59,14 @@ function ChartMainContainer() {
     })
   }
   const handleWithersToggle = newValue => {
-    console.log('=== TOGGLE HANDLER START AT TOGGLE ON CHANGE ===')
-
-    console.log('handleWithersToggle called with:', newValue)
-    console.log('Previous toggle state:', withersToggleValue)
-
-    // Update local state
     setWithersToggleValue(newValue)
-
-    // Send toggle state to mobile as string
     const toggleString = newValue ? 'true' : 'false'
-    console.log('Sending toggle state to IOS : ' + toggleString)
     if (window?.webkit?.messageHandlers?.IOS_BRIDGE) {
       console.log('WebKit bridge is available')
       window?.webkit?.messageHandlers?.IOS_BRIDGE?.postMessage({
         message: toggleString,
       })
-      console.log('Toggle message successfully sent to iOS')
     }
-    console.log('=== TOGGLE HANDLER END ===')
   }
 
   const names = ['Atif', 'Jane', 'Vicky', 'Alice', 'Raj']
