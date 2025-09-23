@@ -276,20 +276,38 @@ function BarChart({ text, handleItemClick, deficitLabel, selectedItem, data, lef
 
       myChart = new Chart(ctx, {
         type: 'bar',
+        // data: {
+        //   labels: ['Left', 'Right'],
+        //   datasets: [
+        //     {
+        //       label: 'none',
+        //       data: [
+        //         parseInt(leftData) > 87 && parseInt(leftData) !== 100 ? 82 : Math.round(parseInt(leftData)),
+        //         parseInt(rightData) > 87 && parseInt(rightData) !== 100 ? 82 : Math.round(parseInt(rightData)),
+        //       ],
+        //       backgroundColor: [
+        //         parseInt(leftData) > parseInt(rightData) ? getColorByRange(type, 0) : getColorByRange(type, parseInt(deficitLabel)),
+        //         parseInt(rightData) > parseInt(leftData) ? getColorByRange(type, 0) : getColorByRange(type, parseInt(deficitLabel)),
+        //       ],
+
+        //       borderRadius: 8,
+        //       maxBarThickness: '46',
+        //       borderSkipped: false,
+        //       animation: false,
+        //       // Set border radius for all bars
+        //     },
+        //   ],
+        // },
         data: {
           labels: ['Left', 'Right'],
           datasets: [
             {
               label: 'none',
-              data: [
-                parseInt(leftData) > 87 && parseInt(leftData) !== 100 ? 82 : Math.round(parseInt(leftData)),
-                parseInt(rightData) > 87 && parseInt(rightData) !== 100 ? 82 : Math.round(parseInt(rightData)),
-              ],
+              data: [Math.trunc(parseInt(leftData)), Math.trunc(parseInt(rightData))],
               backgroundColor: [
-                parseInt(leftData) > parseInt(rightData) ? getColorByRange(type, 0) : getColorByRange(type, parseInt(deficitLabel)),
-                parseInt(rightData) > parseInt(leftData) ? getColorByRange(type, 0) : getColorByRange(type, parseInt(deficitLabel)),
+                parseInt(leftData) > parseInt(rightData) ? getColorByRange(type, 0) : getColorByRange(type, deficitLabel),
+                parseInt(rightData) > parseInt(leftData) ? getColorByRange(type, 0) : getColorByRange(type, deficitLabel),
               ],
-
               borderRadius: 8,
               maxBarThickness: '46',
               borderSkipped: false,
