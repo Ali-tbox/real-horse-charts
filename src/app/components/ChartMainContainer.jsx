@@ -121,7 +121,7 @@ function ChartMainContainer() {
               justifyContent='space-between'
               alignItems='center'
             >
-              <Text color={colors.dullblack} fontSize='16px' fontWeight={700}>
+              <Text color={colors.dullblack} fontSize='16px' fontWeight={700} fontFamily={'Nunito'}>
                 Show withers data
               </Text>
               <Switch size='lg' checked={withersToggleValue} onChange={handleWithersToggle} />
@@ -139,8 +139,9 @@ function ChartMainContainer() {
                   WebkitBoxOrient: 'vertical',
                 }}
                 fontWeight={400}
+                fontFamily={'Nunito'}
               >
-                Description goes here can to 2 lines maximum...
+                Use only for advanced analysis of front-hind asymmetry
               </Text>
             </Box>
           </Box>
